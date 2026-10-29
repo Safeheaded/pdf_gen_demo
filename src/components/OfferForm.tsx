@@ -5,6 +5,7 @@ import { buildOfferNumber } from '../domain/offerNumber';
 import { VAT_RATES } from '../domain/types';
 import { vatLabel } from '../domain/totals';
 import { newItem, type OfferFormValues } from '../offer/schema';
+import { Card } from './Card';
 import { CompanyLogo } from './CompanyLogo';
 import { Field } from './Field';
 import styles from './OfferForm.module.css';
@@ -32,8 +33,7 @@ export const OfferForm = ({ form }: Props) => {
 
   return (
     <form className={styles.form} noValidate onSubmit={(event) => event.preventDefault()}>
-      <fieldset className={styles.section}>
-        <legend>Spółka</legend>
+      <Card title="Spółka" aside={<span className={styles.asideLabel}>Sprzedawca / Wystawca</span>}>
         <Field label="Wybierz spółkę z grupy">
           {(props) => (
             <select
@@ -58,28 +58,29 @@ export const OfferForm = ({ form }: Props) => {
           )}
         </Field>
         <div className={styles.companyCard}>
-          <CompanyLogo company={company} size={36} />
-          <div>
+          <div className={styles.logoTile}>
+            <CompanyLogo company={company} size={26} />
+          </div>
+          <div className={styles.companyInfo}>
             <strong>{company.legalName}</strong>
-            <div className={styles.muted}>
+            <span>
               NIP {company.nip} · KRS {company.krs}
-            </div>
-            <div className={styles.muted}>
+            </span>
+            <span>
               {company.address.street}, {company.address.postalCode} {company.address.city}
-            </div>
-            <div className={styles.muted}>
+            </span>
+            <span className={styles.muted}>
               {company.contact.email} · {company.contact.phone}
-            </div>
+            </span>
           </div>
         </div>
-      </fieldset>
+      </Card>
 
-      <fieldset className={styles.section}>
-        <legend>Oferta</legend>
-        <div className={styles.grid3}>
-          <Field label="Numer oferty" error={errors.offerNumber?.message}>
-            {(props) => <input {...props} {...register('offerNumber')} />}
-          </Field>
+      <Card title="Szczegóły oferty">
+        <Field label="Numer oferty" error={errors.offerNumber?.message}>
+          {(props) => <input className={styles.mono} {...props} {...register('offerNumber')} />}
+        </Field>
+        <div className={styles.grid2}>
           <Field label="Data wystawienia" error={errors.issueDate?.message}>
             {(props) => <input type="date" {...props} {...register('issueDate')} />}
           </Field>
@@ -87,25 +88,35 @@ export const OfferForm = ({ form }: Props) => {
             {(props) => <input inputMode="numeric" {...props} {...register('validityDays')} />}
           </Field>
         </div>
-      </fieldset>
+      </Card>
 
-      <fieldset className={styles.section}>
-        <legend>Klient</legend>
+      <Card title="Klient">
         <Field label="Nazwa firmy" error={errors.clientName?.message}>
           {(props) => <input {...props} {...register('clientName')} />}
         </Field>
         <div className={styles.grid2}>
           <Field label="NIP" error={errors.clientNip?.message}>
-            {(props) => <input inputMode="numeric" {...props} {...register('clientNip')} />}
+            {(props) => (
+              <input className={styles.mono} inputMode="numeric" {...props} {...register('clientNip')} />
+            )}
           </Field>
           <Field label="Osoba kontaktowa" error={errors.clientContact?.message}>
             {(props) => <input {...props} {...register('clientContact')} />}
           </Field>
         </div>
-      </fieldset>
+      </Card>
 
-      <fieldset className={styles.section}>
-        <legend>Pozycje oferty</legend>
+      <Card
+        title="Pozycje oferty"
+        aside={
+          <button type="button" className={styles.add} onClick={() => append(newItem())}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+              <path d="M12 4v16m8-8H4" />
+            </svg>
+            Dodaj pozycję
+          </button>
+        }
+      >
         {errors.items?.root?.message || errors.items?.message ? (
           <p role="alert" className={styles.error}>
             {errors.items?.root?.message ?? errors.items?.message}
@@ -136,32 +147,30 @@ export const OfferForm = ({ form }: Props) => {
                   )}
                 </Field>
                 <div className={styles.netCell}>
-                  <span className={styles.netLabel}>Wartość netto</span>
-                  <RowNet control={control} index={index} />
+                  <div>
+                    <span className={styles.netLabel}>Wartość netto</span>
+                    <RowNet control={control} index={index} />
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.remove}
+                    onClick={() => remove(index)}
+                    aria-label={`Usuń pozycję ${index + 1}`}
+                  >
+                    Usuń
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  className={styles.remove}
-                  onClick={() => remove(index)}
-                  aria-label={`Usuń pozycję ${index + 1}`}
-                >
-                  Usuń
-                </button>
               </div>
             </li>
           ))}
         </ul>
-        <button type="button" className={styles.add} onClick={() => append(newItem())}>
-          + Dodaj pozycję
-        </button>
-      </fieldset>
+      </Card>
 
-      <fieldset className={styles.section}>
-        <legend>Uwagi i warunki współpracy</legend>
+      <Card title="Uwagi i warunki współpracy">
         <Field label="Treść widoczna na ofercie">
           {(props) => <textarea rows={4} {...props} {...register('notes')} />}
         </Field>
-      </fieldset>
+      </Card>
     </form>
   );
 };

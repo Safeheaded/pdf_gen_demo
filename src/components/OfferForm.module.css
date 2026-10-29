@@ -1,23 +1,13 @@
 .form {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
-.section {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-  margin: 0;
-  padding: var(--space-4);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius);
-}
-
-.section legend {
-  font-weight: 700;
-  padding: 0 var(--space-2);
+.asideLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-accent);
 }
 
 .grid2 {
@@ -26,24 +16,50 @@
   gap: var(--space-3);
 }
 
-.grid3 {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: var(--space-3);
+.form .mono {
+  font-family: var(--font-mono);
+  font-size: 13px;
 }
 
 .companyCard {
   display: flex;
-  gap: var(--space-3);
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px;
+  background: var(--color-surface-alt);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.logoTile {
+  display: flex;
   align-items: center;
-  padding: var(--space-3);
-  background: var(--color-bg);
-  border-radius: var(--radius);
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.companyInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #475569;
+  min-width: 0;
+}
+
+.companyInfo strong {
+  font-size: 14px;
+  color: var(--color-text);
 }
 
 .muted {
   color: var(--color-muted);
-  font-size: 12px;
 }
 
 .items {
@@ -52,60 +68,78 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
 }
 
 .item {
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding: var(--space-3);
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: var(--color-surface-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius);
 }
 
 .itemNumbers {
   display: grid;
-  grid-template-columns: 1fr 1.4fr 1fr 1.4fr auto;
+  grid-template-columns: 3fr 4fr 3.2fr 4.4fr;
   gap: var(--space-3);
   align-items: end;
 }
 
 .netCell {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-1);
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  padding-bottom: 6px;
 }
 
 .netLabel {
-  font-size: 12px;
-  font-weight: 600;
-  color: var(--color-muted);
+  display: block;
+  font-size: 10px;
+  color: #94a3b8;
 }
 
 .rowNet {
-  padding: var(--space-2) 0;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .remove,
 .add {
   font: inherit;
+  font-size: 12px;
+  font-weight: 600;
   cursor: pointer;
-  border-radius: var(--radius);
-  padding: var(--space-2) var(--space-3);
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: inherit;
+  border: 0;
+  border-radius: var(--radius-sm);
+  transition: background-color 0.15s;
+}
+
+.remove {
+  padding: 6px 10px;
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
 }
 
 .remove:hover {
-  border-color: var(--color-danger);
-  color: var(--color-danger);
+  background: #ffe4e6;
 }
 
 .add {
-  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+
+.add:hover {
+  background: var(--color-accent-soft-hover);
 }
 
 .error {
@@ -116,7 +150,6 @@
 
 @media (max-width: 640px) {
   .grid2,
-  .grid3,
   .itemNumbers {
     grid-template-columns: 1fr;
   }

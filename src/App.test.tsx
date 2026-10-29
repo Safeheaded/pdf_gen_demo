@@ -39,7 +39,7 @@ describe('App', () => {
     const user = userEvent.setup();
     render(<App />);
 
-    await user.click(screen.getByRole('button', { name: '+ Dodaj pozycję' }));
+    await user.click(screen.getByRole('button', { name: 'Dodaj pozycję' }));
     expect(screen.getAllByLabelText('Nazwa usługi / produktu')).toHaveLength(4);
 
     for (const button of screen.getAllByRole('button', { name: /Usuń pozycję/ })) {
