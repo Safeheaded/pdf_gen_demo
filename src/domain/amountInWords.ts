@@ -44,10 +44,11 @@ const integerInWords = (n: number): string => {
   return parts.join(' ');
 };
 
-/** "Słownie" line for an amount in grosz, e.g. "sto dwadzieścia trzy złote 45/100". */
+/** "Słownie" line for an amount in grosz, e.g. "sto dwadzieścia trzy złote czterdzieści pięć groszy". */
 export const amountInWords = (grosz: number): string => {
   const zloty = Math.floor(grosz / 100);
-  const cents = String(grosz % 100).padStart(2, '0');
+  const cents = grosz % 100;
   const currency = plural(zloty, 'złoty', 'złote', 'złotych');
-  return `${integerInWords(zloty)} ${currency} ${cents}/100`;
+  const subunit = plural(cents, 'grosz', 'grosze', 'groszy');
+  return `${integerInWords(zloty)} ${currency} ${integerInWords(cents)} ${subunit}`;
 };

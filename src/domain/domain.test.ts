@@ -71,16 +71,19 @@ describe('money parsing and formatting', () => {
 
 describe('amountInWords', () => {
   it.each([
-    [0, 'zero złotych 00/100'],
-    [100, 'jeden złoty 00/100'],
-    [250, 'dwa złote 50/100'],
-    [500, 'pięć złotych 00/100'],
-    [1200, 'dwanaście złotych 00/100'],
-    [12345, 'sto dwadzieścia trzy złote 45/100'],
-    [100000, 'tysiąc złotych 00/100'],
-    [250000, 'dwa tysiące pięćset złotych 00/100'],
-    [2200000, 'dwadzieścia dwa tysiące złotych 00/100'],
-    [123456789, 'jeden milion dwieście trzydzieści cztery tysiące pięćset sześćdziesiąt siedem złotych 89/100'],
+    [0, 'zero złotych zero groszy'],
+    [100, 'jeden złoty zero groszy'],
+    [250, 'dwa złote pięćdziesiąt groszy'],
+    [500, 'pięć złotych zero groszy'],
+    [1200, 'dwanaście złotych zero groszy'],
+    [12345, 'sto dwadzieścia trzy złote czterdzieści pięć groszy'],
+    [100000, 'tysiąc złotych zero groszy'],
+    [250000, 'dwa tysiące pięćset złotych zero groszy'],
+    [2200000, 'dwadzieścia dwa tysiące złotych zero groszy'],
+    [101, 'jeden złoty jeden grosz'],
+    [102, 'jeden złoty dwa grosze'],
+    [112, 'jeden złoty dwanaście groszy'],
+    [123456789, 'jeden milion dwieście trzydzieści cztery tysiące pięćset sześćdziesiąt siedem złotych osiemdziesiąt dziewięć groszy'],
   ])('%i grosz', (grosz, expected) => {
     expect(amountInWords(grosz)).toBe(expected);
   });
